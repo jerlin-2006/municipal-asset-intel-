@@ -1,0 +1,9 @@
+asset_id,asset_type,location,material,installation_date,design_life_years,initial_condition_score,criticality
+WATER-01,Water,North Road,DI,2018-06-01,30,90,High
+WATER-02,Water,Market Road,PVC,2020-03-15,25,85,Medium
+WATER-03,Water,School Road,DI,2015-08-20,30,65,High
+WATER-04,Water,Temple Road,PVC,2022-01-10,25,95,Low
+DRAIN-01,Drainage,North Road,Concrete,2012-06-01,40,70,High
+DRAIN-02,Drainage,Market Road,Concrete,2018-11-12,40,80,Medium
+WATER-05,Water,Hospital Road,DI,2010-04-15,30,45,High
+WATER-06,Water,Bus Stand Road,PVC,2019-09-01,25,75,Medium

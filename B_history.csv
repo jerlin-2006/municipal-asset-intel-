@@ -1,0 +1,121 @@
+record_id,asset_id,timestamp,record_type,complaint_type,severity,pressure_psi,acoustic_frequency_khz,previous_complaint_count,last_repair_type,repair_action,repair_cost,downtime_hours,verified_outcome
+REC-001,WATER-04,2022-01-04 3:00:00,Complaint,Crack,3,49.8,3.58,10,Protective coating,,,,Confirmed
+REC-002,WATER-03,2022-01-21 15:00:00,Complaint,Crack,1,35.3,3.42,6,Crack sealing,,,,Confirmed
+REC-003,WATER-04,2022-01-27 21:00:00,Inspection,Corrosion,4,66.9,2.42,6,Protective coating,Inspection only,,0.5,Confirmed
+REC-004,WATER-06,2022-03-09 21:00:00,Inspection,Crack,2,45.2,0.87,4,Protective coating,Inspection only,,0.2,No Defect Found
+REC-005,WATER-04,2022-03-15 0:00:00,Complaint,Corrosion,3,59,1.85,3,Corrosion treatment,,,,Confirmed
+REC-006,WATER-04,2022-03-19 21:00:00,Complaint,Crack,1,43.5,5,6,Protective coating,,,,Confirmed
+REC-007,WATER-05,2022-03-20 3:00:00,Complaint,Leakage,1,39.2,3.16,2,Seal replacement,,,,Confirmed
+REC-008,WATER-02,2022-04-06 12:00:00,Complaint,Corrosion,2,53.5,0.56,3,None recorded,,,,Confirmed
+REC-009,WATER-05,2022-04-13 0:00:00,Inspection,Leakage,3,47.9,1.34,3,Seal replacement,Inspection only,,1.3,Confirmed
+REC-010,WATER-03,2022-04-17 12:00:00,Complaint,Crack,4,63.1,7.17,5,Pipe section replacement,,,,Not Confirmed
+REC-011,WATER-01,2022-04-29 0:00:00,Complaint,Crack,3,24.2,5.3,3,Joint repair,,,,Confirmed
+REC-012,WATER-04,2022-05-16 21:00:00,Complaint,Corrosion,4,64.7,3.21,11,Protective coating,,,,Confirmed
+REC-013,WATER-03,2022-05-25 21:00:00,Complaint,Crack,1,38.7,3.39,9,Crack sealing,,,,Confirmed
+REC-014,WATER-06,2022-05-26 3:00:00,Inspection,Crack,4,47.4,3.47,5,Protective coating,Inspection only,,1.9,Confirmed
+REC-015,WATER-02,2022-06-01 15:00:00,Inspection,Leakage,3,51.2,0.91,7,None recorded,Inspection only,,0.1,Confirmed
+REC-016,WATER-02,2022-06-09 12:00:00,Maintenance,Crack,4,24.6,6.21,8,Joint repair,Structural inspection,16300,17.5,Confirmed
+REC-017,WATER-04,2022-06-10 3:00:00,Complaint,Corrosion,5,62.6,3.25,7,Protective coating,,,,Confirmed
+REC-018,WATER-02,2022-06-16 9:00:00,Inspection,Leakage,4,41.2,6.82,7,None recorded,Inspection only,,1.7,No Defect Found
+REC-019,WATER-02,2022-06-17 3:00:00,Complaint,Leakage,2,53.4,2.23,1,None recorded,,,,Confirmed
+REC-020,WATER-05,2022-06-23 15:00:00,Complaint,Corrosion,2,57.1,3.27,0,Seal replacement,,,,Confirmed
+REC-021,WATER-05,2022-07-07 21:00:00,Complaint,Leakage,1,30.3,4.14,0,Seal replacement,,,,Not Confirmed
+REC-022,WATER-05,2022-07-15 6:00:00,Complaint,Leakage,3,55.2,3.54,1,Seal replacement,,,,Confirmed
+REC-023,WATER-05,2022-08-06 3:00:00,Inspection,Leakage,3,39.2,4.32,0,Desilting,Inspection only,,1.2,Confirmed
+REC-024,WATER-02,2022-09-27 18:00:00,Complaint,Blockage,4,64.8,2.64,6,None recorded,,,,Confirmed
+REC-025,WATER-01,2022-09-30 3:00:00,Complaint,Leakage,5,31.5,6.74,7,Pipe clamp repair,,,,Confirmed
+REC-026,WATER-02,2022-10-12 18:00:00,Complaint,Leakage,1,55.6,2.12,0,None recorded,,,,Pending
+REC-027,WATER-02,2022-10-28 9:00:00,Complaint,Corrosion,5,64.9,4.4,12,Pipe section replacement,,,,Confirmed
+REC-028,WATER-03,2022-11-12 9:00:00,Maintenance,Crack,4,47.8,3.19,6,Pipe section replacement,Crack sealing,8700,11.6,Confirmed
+REC-029,WATER-01,2022-11-17 12:00:00,Maintenance,Leakage,2,29,3.54,3,Pipe section replacement,Joint repair,8800,11.8,No Defect Found
+REC-030,WATER-01,2022-12-02 21:00:00,Maintenance,Leakage,3,59,1.61,6,Joint repair,Pipe clamp repair,7000,27.5,Confirmed
+REC-031,WATER-04,2022-12-15 18:00:00,Complaint,Corrosion,5,63.8,2.35,4,Corrosion treatment,,,,Confirmed
+REC-032,WATER-01,2022-12-16 9:00:00,Complaint,Leakage,2,48.1,2.41,0,Pipe section replacement,,,,Confirmed
+REC-033,WATER-06,2022-12-16 12:00:00,Complaint,Crack,3,58,1.64,1,None recorded,,,,Confirmed
+REC-034,WATER-03,2022-12-20 12:00:00,Complaint,Crack,2,41.7,6.07,3,None recorded,,,,Confirmed
+REC-035,WATER-06,2023-02-14 3:00:00,Inspection,Blockage,2,37.9,2.08,2,None recorded,Inspection only,,0.7,Confirmed
+REC-036,WATER-01,2023-03-02 18:00:00,Complaint,Leakage,4,22.6,3.75,8,Pipe clamp repair,,,,Not Confirmed
+REC-037,WATER-06,2023-04-01 0:00:00,Complaint,Crack,2,56,2.72,3,Protective coating,,,,Confirmed
+REC-038,WATER-01,2023-04-03 3:00:00,Inspection,Leakage,5,27.3,7.13,4,Joint repair,Inspection only,,0,Confirmed
+REC-039,WATER-01,2023-04-10 21:00:00,Complaint,Leakage,5,28.9,7.62,8,Pipe clamp repair,,,,Confirmed
+REC-040,WATER-02,2023-04-24 12:00:00,Complaint,Leakage,3,58.8,5.23,9,Pipe section replacement,,,,Confirmed
+REC-041,WATER-03,2023-05-12 12:00:00,Complaint,Crack,1,47.5,6.45,7,Crack sealing,,,,Confirmed
+REC-042,WATER-05,2023-05-23 9:00:00,Maintenance,Blockage,4,40.9,0.9,0,None recorded,Desilting,2600,4.2,Confirmed
+REC-043,WATER-01,2023-06-02 15:00:00,Complaint,Blockage,2,60.8,2.85,5,Joint repair,,,,Confirmed
+REC-044,WATER-06,2023-06-16 0:00:00,Complaint,Crack,3,40.5,5.57,5,Protective coating,,,,Not Confirmed
+REC-045,WATER-04,2023-06-27 0:00:00,Complaint,Blockage,5,48.5,0.25,5,Corrosion treatment,,,,Pending
+REC-046,WATER-05,2023-07-20 12:00:00,Inspection,Leakage,3,36.6,2.63,0,Desilting,Inspection only,,1.3,Confirmed
+REC-047,WATER-04,2023-07-21 15:00:00,Complaint,Corrosion,2,38.8,3.99,0,None recorded,,,,Confirmed
+REC-048,WATER-03,2023-08-27 12:00:00,Maintenance,Crack,4,25.2,2.06,12,Crack sealing,Crack sealing,8700,9.7,Confirmed
+REC-049,WATER-02,2023-10-09 6:00:00,Maintenance,Leakage,2,65.5,4.37,7,None recorded,Joint repair,14900,16.8,Pending
+REC-050,WATER-06,2023-10-11 12:00:00,Complaint,Crack,3,32.9,4.02,0,None recorded,,,,Confirmed
+REC-051,WATER-01,2023-10-14 3:00:00,Complaint,Leakage,3,65.9,2.45,4,Joint repair,,,,Confirmed
+REC-052,WATER-03,2023-11-04 9:00:00,Complaint,Crack,2,47.1,4.75,0,None recorded,,,,Confirmed
+REC-053,WATER-04,2023-11-29 9:00:00,Maintenance,Corrosion,2,68.7,2.09,8,Protective coating,Protective coating,7900,10.2,Confirmed
+REC-054,WATER-02,2024-01-10 18:00:00,Complaint,Leakage,2,51.1,1.8,7,Joint repair,,,,Confirmed
+REC-055,WATER-02,2024-01-20 0:00:00,Complaint,Leakage,2,65.7,3.8,0,None recorded,,,,Confirmed
+REC-056,WATER-06,2024-01-31 15:00:00,Complaint,Crack,2,63.4,6.59,1,None recorded,,,,Not Confirmed
+REC-057,WATER-04,2024-02-03 6:00:00,Maintenance,Corrosion,3,53.7,4.21,5,Corrosion treatment,Protective coating,13600,9.3,No Defect Found
+REC-058,WATER-04,2024-02-16 21:00:00,Maintenance,Corrosion,3,37.9,1.76,3,None recorded,Corrosion treatment,11400,18.3,Pending
+REC-059,WATER-06,2024-02-18 3:00:00,Complaint,Crack,2,54.1,5.56,1,None recorded,,,,Not Confirmed
+REC-060,WATER-03,2024-03-01 12:00:00,Complaint,Crack,5,55.7,2.04,4,Crack sealing,,,,Not Confirmed
+REC-061,WATER-03,2024-03-03 18:00:00,Inspection,Crack,3,49.9,2.91,13,Crack sealing,Inspection only,,0.2,No Defect Found
+REC-062,WATER-06,2024-03-20 3:00:00,Inspection,Crack,4,64.6,4.24,1,None recorded,Inspection only,,1.6,Confirmed
+REC-063,WATER-01,2024-03-23 0:00:00,Complaint,Leakage,2,39.3,4.17,1,Pipe section replacement,,,,Confirmed
+REC-064,WATER-04,2024-03-26 9:00:00,Inspection,Corrosion,4,52.4,2.58,1,None recorded,Inspection only,,1.7,No Defect Found
+REC-065,WATER-04,2024-04-23 9:00:00,Complaint,Corrosion,4,42.2,1.01,8,Protective coating,,,,Confirmed
+REC-066,WATER-02,2024-04-28 0:00:00,Inspection,Leakage,2,46.7,1.31,0,None recorded,Inspection only,,0.3,No Defect Found
+REC-067,WATER-05,2024-05-01 6:00:00,Inspection,Leakage,3,50.7,1.51,0,Seal replacement,Inspection only,,0.8,Confirmed
+REC-068,WATER-01,2024-05-20 9:00:00,Maintenance,Leakage,2,66,4.93,0,None recorded,Pipe section replacement,16300,25.4,Confirmed
+REC-069,WATER-02,2024-06-20 0:00:00,Complaint,Leakage,4,37.6,3.38,5,None recorded,,,,Confirmed
+REC-070,WATER-03,2024-06-20 12:00:00,Complaint,Corrosion,3,65.4,2.39,8,Crack sealing,,,,Confirmed
+REC-071,WATER-03,2024-06-20 15:00:00,Maintenance,Crack,3,41.3,4.75,5,Crack sealing,Structural inspection,5200,13.8,Confirmed
+REC-072,WATER-01,2024-07-14 15:00:00,Complaint,Leakage,4,30.1,7.68,6,Pipe clamp repair,,,,Confirmed
+REC-073,WATER-03,2024-08-11 6:00:00,Complaint,Crack,3,29.2,7.21,2,None recorded,,,,Not Confirmed
+REC-074,WATER-03,2024-09-17 3:00:00,Inspection,Crack,5,47.7,5.88,12,Crack sealing,Inspection only,,2,Confirmed
+REC-075,WATER-04,2024-10-02 15:00:00,Inspection,Blockage,2,47.4,1.44,2,None recorded,Inspection only,,2,No Defect Found
+REC-076,WATER-04,2024-10-30 9:00:00,Complaint,Corrosion,1,34.6,3.58,9,Protective coating,,,,Confirmed
+REC-077,WATER-04,2024-11-01 0:00:00,Inspection,Corrosion,2,69.3,3.26,5,Corrosion treatment,Inspection only,,0.2,Confirmed
+REC-078,WATER-01,2024-11-15 0:00:00,Complaint,Leakage,2,46.8,1.54,9,Seal replacement,,,,Not Confirmed
+REC-079,WATER-03,2024-11-18 6:00:00,Inspection,Blockage,2,45.7,0.76,5,Crack sealing,Inspection only,,0.7,Confirmed
+REC-080,WATER-01,2024-12-11 0:00:00,Complaint,Leakage,3,33.9,4.65,2,Pipe section replacement,,,,Confirmed
+REC-081,WATER-03,2024-12-11 15:00:00,Complaint,Crack,3,40.9,4.79,4,Crack sealing,,,,Confirmed
+REC-082,WATER-01,2024-12-21 18:00:00,Maintenance,Leakage,3,44.5,1.34,6,Pipe clamp repair,Pipe section replacement,3000,7.1,No Defect Found
+REC-083,WATER-01,2025-01-11 12:00:00,Inspection,Leakage,4,31.5,4.51,8,Pipe clamp repair,Inspection only,,1.7,Confirmed
+REC-084,WATER-01,2025-01-24 3:00:00,Maintenance,Leakage,3,38.6,4.95,6,Pipe section replacement,Pipe clamp repair,11500,2.3,Confirmed
+REC-085,WATER-02,2025-01-27 21:00:00,Complaint,Blockage,3,69.6,2.45,2,None recorded,,,,Confirmed
+REC-086,WATER-03,2025-02-02 6:00:00,Complaint,Crack,4,59.2,6.46,15,Crack sealing,,,,Confirmed
+REC-087,WATER-03,2025-02-21 0:00:00,Maintenance,Crack,4,24.3,5.51,4,None recorded,Crack sealing,7800,28.5,Confirmed
+REC-088,WATER-04,2025-03-18 15:00:00,Complaint,Corrosion,1,40.5,3.8,2,None recorded,,,,Confirmed
+REC-089,WATER-02,2025-03-23 3:00:00,Inspection,Crack,2,49.7,1.64,9,Pipe section replacement,Inspection only,,1.8,Confirmed
+REC-090,WATER-03,2025-03-30 6:00:00,Complaint,Crack,4,61.1,3.19,12,Crack sealing,,,,Confirmed
+REC-091,WATER-01,2025-04-02 18:00:00,Inspection,Leakage,5,24.3,9.35,6,Pipe clamp repair,Inspection only,,0.5,No Defect Found
+REC-092,WATER-02,2025-04-24 21:00:00,Complaint,Leakage,5,26.2,8.25,8,Pipe section replacement,,,,Confirmed
+REC-093,WATER-05,2025-05-25 3:00:00,Maintenance,Leakage,2,59.8,4.6,0,Desilting,Seal replacement,7500,18.6,Confirmed
+REC-094,WATER-03,2025-05-26 21:00:00,Inspection,Corrosion,4,34.1,3.21,13,Crack sealing,Inspection only,,1,No Defect Found
+REC-095,WATER-02,2025-06-19 18:00:00,Complaint,Leakage,2,41.2,4.52,10,Pipe section replacement,,,,Confirmed
+REC-096,WATER-04,2025-06-23 6:00:00,Inspection,Corrosion,2,55.5,3.02,3,Corrosion treatment,Inspection only,,0.4,Confirmed
+REC-097,WATER-03,2025-08-18 6:00:00,Maintenance,Crack,4,51,4.59,5,Structural inspection,Pipe section replacement,9400,26.3,Confirmed
+REC-098,WATER-02,2025-09-02 21:00:00,Complaint,Crack,4,64.3,1.79,4,None recorded,,,,Confirmed
+REC-099,WATER-03,2025-09-11 18:00:00,Complaint,Crack,3,50.3,2.29,2,None recorded,,,,Confirmed
+REC-100,WATER-06,2025-09-26 15:00:00,Maintenance,Corrosion,3,38.1,3.25,2,None recorded,Protective coating,3300,21.7,Confirmed
+REC-101,WATER-02,2025-10-27 6:00:00,Complaint,Leakage,4,24.9,10.07,11,Pipe section replacement,,,,Confirmed
+REC-102,WATER-03,2025-10-28 0:00:00,Complaint,Crack,2,24.1,2.64,1,None recorded,,,,Confirmed
+REC-103,WATER-03,2025-11-16 0:00:00,Complaint,Crack,3,48.3,4.63,11,Crack sealing,,,,Confirmed
+REC-104,WATER-04,2025-11-21 9:00:00,Complaint,Corrosion,2,33.7,2.74,1,None recorded,,,,Confirmed
+REC-105,WATER-02,2025-12-06 15:00:00,Maintenance,Crack,5,40.8,1.04,8,Structural inspection,Pipe section replacement,13700,26.5,Confirmed
+REC-106,WATER-03,2025-12-18 21:00:00,Complaint,Crack,2,39.1,7.44,14,Crack sealing,,,,Confirmed
+REC-107,WATER-01,2026-01-15 9:00:00,Maintenance,Leakage,4,36.7,6.82,9,Pipe clamp repair,Seal replacement,13800,20.9,Confirmed
+REC-108,WATER-02,2026-02-28 18:00:00,Inspection,Leakage,1,35.4,1.56,0,None recorded,Inspection only,,1.4,Confirmed
+REC-109,WATER-03,2026-03-18 12:00:00,Complaint,Crack,3,37.5,7.09,10,Crack sealing,,,,Confirmed
+REC-110,WATER-04,2026-03-21 0:00:00,Complaint,Leakage,3,30.6,5.09,8,Protective coating,,,,Pending
+REC-111,WATER-06,2026-04-04 0:00:00,Complaint,Crack,2,30.5,6.62,4,Protective coating,,,,Confirmed
+REC-112,WATER-05,2026-05-10 12:00:00,Complaint,Leakage,3,51.8,4.59,0,Desilting,,,,Not Confirmed
+REC-113,WATER-03,2026-05-21 15:00:00,Complaint,Crack,3,38.7,1.39,5,Pipe section replacement,,,,Pending
+REC-114,WATER-03,2026-06-29 15:00:00,Complaint,Crack,4,62,4.9,5,Pipe section replacement,,,,Confirmed
+REC-115,WATER-04,2026-06-30 15:00:00,Complaint,Corrosion,3,69.6,2.49,5,Protective coating,,,,Confirmed
+REC-116,WATER-03,2026-07-12 9:00:00,Complaint,Leakage,4,29.1,5.57,13,Crack sealing,,,,Confirmed
+REC-117,WATER-02,2026-08-08 9:00:00,Inspection,Leakage,4,21.1,7.88,4,None recorded,Inspection only,,0,Confirmed
+REC-118,WATER-04,2026-08-27 15:00:00,Complaint,Leakage,3,30,2.53,9,Protective coating,,,,Pending
+REC-119,WATER-06,2026-09-18 6:00:00,Inspection,Crack,2,46.9,7.19,1,None recorded,Inspection only,,0.9,Confirmed
+REC-120,WATER-06,2026-09-29 15:00:00,Complaint,Blockage,1,44.7,0.89,2,Protective coating,,,,Confirmed

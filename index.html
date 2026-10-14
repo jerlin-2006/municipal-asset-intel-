@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart City - Municipal Asset Intelligence Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <style>
+    .chart-box { position: relative; height: 300px; width: 100%; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased p-4 md:p-8">
+
+  <div class="max-w-7xl mx-auto space-y-8">
+
+    <!-- HEADER -->
+    <header class="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-slate-800 gap-4">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-white flex items-center gap-3">
+          <span>🏛️</span> Municipal Asset Management & Predictive Maintenance
+        </h1>
+        <p class="text-slate-400 text-sm mt-1">
+          Automated Gemini OCR Petition Intake • RUL Prediction • Priority Scheduling
+        </p>
+      </div>
+      <div>
+        <span id="engine-pill" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-slate-900 border border-slate-700 text-slate-400">
+          <span class="w-2 h-2 rounded-full bg-slate-500 mr-2"></span> Checking engine...
+        </span>
+      </div>
+    </header>
+
+    <!-- INTAKE & BREAKDOWN SECTION -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+      <!-- Complaint Upload Box -->
+      <div class="lg:col-span-5 bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
+        <h2 class="text-lg font-bold text-white mb-2 flex items-center gap-2"><span>📝</span> Citizen Grievance Intake</h2>
+        <p class="text-xs text-slate-400 mb-5">Upload petition slip (Tamil/English) or enter description.</p>
+
+        <form id="complaintForm" class="space-y-4" onsubmit="return false;">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Complaint Narrative (Optional)</label>
+            <textarea id="complaint_text" rows="3" placeholder="Enter details or leave blank to rely on image OCR..."
+              class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-cyan-500"></textarea>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Upload Petition Slip</label>
+            <input type="file" id="image_file" accept="image/*"
+              class="block w-full text-xs text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-cyan-950 file:text-cyan-400 hover:file:bg-cyan-900 border border-slate-800 rounded-xl bg-slate-950 cursor-pointer">
+            <img id="image_preview" class="hidden mt-3 max-h-40 rounded-lg border border-slate-800" alt="Petition preview">
+          </div>
+
+          <button type="button" id="btn-submit" onclick="submitPipeline(event)"
+            class="w-full bg-cyan-600 hover:bg-cyan-500 disabled:opacity-60 text-white font-bold py-2.5 px-4 rounded-xl text-sm transition shadow-lg shadow-cyan-950/50 flex items-center justify-center gap-2">
+            <span>🚀</span> Run Pipeline & Process
+          </button>
+        </form>
+
+        <div id="statusAlert" class="hidden mt-4 p-3 rounded-xl text-xs font-medium border"></div>
+      </div>
+
+      <!-- Live Inspection Card -->
+      <div class="lg:col-span-7 bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2"><span>🔍</span> Latest Inspection Breakdown</h2>
+            <span id="card-badge" class="px-2.5 py-1 bg-slate-800 border border-slate-700 text-slate-300 rounded-full text-xs font-semibold">Ready for Input</span>
+          </div>
+
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+            <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800/80">
+              <span class="text-[10px] uppercase font-bold text-slate-500 block">Matched Asset</span>
+              <span id="card-asset-id" class="text-base font-extrabold text-cyan-400 font-mono">--</span>
+            </div>
+            <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800/80">
+              <span class="text-[10px] uppercase font-bold text-slate-500 block">Location</span>
+              <span id="card-location" class="text-sm font-semibold text-slate-200">--</span>
+            </div>
+            <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800/80">
+              <span class="text-[10px] uppercase font-bold text-slate-500 block">Defect</span>
+              <span id="card-defect" class="text-sm font-semibold text-rose-400">--</span>
+            </div>
+            <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800/80">
+              <span class="text-[10px] uppercase font-bold text-slate-500 block">Est. RUL</span>
+              <span id="card-rul" class="text-base font-extrabold text-amber-400 font-mono">--</span>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <div>
+              <span class="text-[10px] uppercase font-bold text-slate-500 block mb-1">Assigned Crew</span>
+              <p id="card-crew" class="text-xs text-slate-300 font-medium bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80">Awaiting intake submission...</p>
+            </div>
+            <div>
+              <span class="text-[10px] uppercase font-bold text-slate-500 block mb-1">Recommended Action</span>
+              <p id="card-action" class="text-xs text-slate-300 bg-slate-950/80 p-2.5 rounded-xl border border-slate-800/80">--</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-4 border-t border-slate-800 text-xs text-slate-400 flex items-center justify-between">
+          <span>Target File: <strong class="text-slate-300 font-mono">C_report.csv</strong></span>
+          <span class="text-emerald-400">Deterministic match + recency-weighted RUL model</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRIORITIZED WORK ORDER QUEUE -->
+    <section class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-800/80 gap-2 mb-4">
+        <div>
+          <h2 class="text-lg font-bold text-white flex items-center gap-2"><span>🚚</span> Prioritized Work Order Queue</h2>
+          <p class="text-xs text-slate-400">Highest priority first. Click any row to display its predictive maintenance graphs below.</p>
+        </div>
+        <button onclick="fetchQueue()" class="text-xs text-cyan-400 hover:text-cyan-300 font-semibold px-3 py-1 bg-cyan-950/50 rounded-lg border border-cyan-800/60">↻ Refresh Queue</button>
+      </div>
+
+      <div class="overflow-x-auto rounded-xl border border-slate-800 bg-slate-950/70">
+        <table class="w-full text-left text-sm text-slate-300">
+          <thead class="text-xs uppercase bg-slate-900 text-slate-400 border-b border-slate-800">
+            <tr>
+              <th class="py-3 px-4">Score & Priority</th>
+              <th class="py-3 px-4">Asset ID</th>
+              <th class="py-3 px-4">Location</th>
+              <th class="py-3 px-4">Extracted Defect</th>
+              <th class="py-3 px-4">Est. RUL</th>
+              <th class="py-3 px-4">Condition</th>
+              <th class="py-3 px-4">Assigned Crew</th>
+            </tr>
+          </thead>
+          <tbody id="workorder-table-body">
+            <tr><td colspan="7" class="py-6 text-center text-xs text-slate-500">Loading work orders...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- PREDICTIVE MAINTENANCE GRAPHS -->
+    <section class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
+      <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-slate-800/80 gap-3 mb-6">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-xl">📈</span>
+            <h2 id="chart-main-title" class="text-lg font-bold text-white">Predictive Maintenance & Degradation Forecast</h2>
+          </div>
+          <p class="text-xs text-slate-400 mt-0.5">Degradation path and failure risk are computed from the selected asset's age, condition and remaining life.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <span id="chart-asset-pill" class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-cyan-950 text-cyan-400 border border-cyan-800">--</span>
+          <span id="chart-risk-pill" class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700">Select a work order</span>
+        </div>
+      </div>
+
+      <div id="chart-empty" class="hidden text-center text-xs text-slate-500 py-10">
+        No asset matched for this complaint, so there is nothing to forecast. It needs manual review.
+      </div>
+
+      <div id="chart-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-slate-950/80 border border-slate-800/80 rounded-xl p-4">
+          <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2 flex items-center justify-between">
+            <span>Asset Health Degradation Curve</span>
+            <span class="text-[10px] text-slate-500 normal-case">Condition score vs asset age</span>
+          </h3>
+          <div class="chart-box"><canvas id="degradationCurveChart"></canvas></div>
+        </div>
+
+        <div class="bg-slate-950/80 border border-slate-800/80 rounded-xl p-4">
+          <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2 flex items-center justify-between">
+            <span>12-Month Failure Probability (%)</span>
+            <span class="text-[10px] text-slate-500 normal-case">Cumulative failure risk</span>
+          </h3>
+          <div class="chart-box"><canvas id="failureRiskChart"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    let degradationChart = null;
+    let failureRiskChart = null;
+    let selectedId = null;            // complaint_id of the highlighted row
+    let rowsById = {};
+
+    // ---------- PURE HELPERS (no DOM) ----------
+    // <pure>
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const num = (v, d = null) => { const n = parseFloat(v); return Number.isFinite(n) ? n : d; };
+
+    // Backend row (C_report.csv) -> view model. Field names match generate_C.py exactly.
+    function toView(item) {
+      return {
+        id: item.complaint_id || '',
+        assetId: item.matched_asset_id || '',
+        location: item.location || item.extracted_location || '--',
+        defect: item.issue_type || '--',
+        rul: num(item.estimated_remaining_life),
+        condition: num(item.current_condition_score),
+        crew: item.assigned_crew || '--',
+        score: num(item.priority_score, 0),
+        level: item.priority_level || 'Unassigned',
+        initial: num(item.initial_condition_score),
+        age: num(item.asset_age_years),
+        design: num(item.design_life_years),
+        rate: num(item.degradation_rate),
+        confidence: item.match_confidence || '',
+        action: item.recommended_action || '',
+        text: item.complaint_text || ''
+      };
+    }
+
+    // Health curve: estimated past (initial -> today), then forecast (today -> end of remaining life).
+    function buildHealthSeries(v) {
+      const initial = v.initial ?? 100;
+      const cond = v.condition ?? initial;
+      const age = Math.max(v.age ?? 0, 0);
+      const rul = Math.max(v.rul ?? 0.5, 0.1);
+      const rate = v.rate ?? Math.max((initial - 25) / (v.design || 30), 0.5);
+
+      const past = [];
+      const steps = 12;
+      for (let i = 0; i <= steps; i++) {
+        const t = age * i / steps;
+        const frac = age > 0 ? Math.pow(t / age, 1.4) : 1;     // wear accelerates with age
+        past.push({ x: +t.toFixed(2), y: +(initial - (initial - cond) * frac).toFixed(1) });
+      }
+      const endVal = Math.max(0, +(cond - rate * rul).toFixed(1));
+      const future = [{ x: +age.toFixed(2), y: cond }];
+      for (let i = 1; i <= 6; i++) {
+        const t = rul * i / 6;
+        future.push({ x: +(age + t).toFixed(2), y: Math.max(0, +(cond - rate * t).toFixed(1)) });
+      }
+      return { past, future, endVal, xMax: +(age + rul).toFixed(2), age, cond };
+    }
+
+    // P(fail within m months): Weibull (shape 2, wear-out) scaled so that P = 50% at t = RUL.
+    function failureProbability(rul, months = 12) {
+      const L = Math.max(rul, 0.1), out = [];
+      for (let m = 0; m <= months; m++) {
+        const p = 1 - Math.exp(-Math.LN2 * Math.pow((m / 12) / L, 2));
+        out.push(+(p * 100).toFixed(1));
+      }
+      return out;
+    }
+    // </pure>
+
+    const LEVEL_BADGE = {
+      High: 'bg-red-950 text-red-400 border-red-800',
+      Medium: 'bg-amber-950 text-amber-400 border-amber-800',
+      Low: 'bg-emerald-950 text-emerald-400 border-emerald-800',
+      Unassigned: 'bg-slate-800 text-slate-300 border-slate-700'
+    };
+    const badgeClass = lvl => 'px-2.5 py-1 border rounded-full text-xs font-semibold ' + (LEVEL_BADGE[lvl] || LEVEL_BADGE.Unassigned);
+
+    // ---------- STATUS / ENGINE ----------
+    function showStatus(msg, color) {
+      const alert = document.getElementById('statusAlert');
+      alert.className = 'mt-4 p-3 rounded-xl text-xs font-medium border block';
+      const map = {
+        emerald: ['bg-emerald-950/80', 'border-emerald-800', 'text-emerald-300'],
+        rose: ['bg-rose-950/80', 'border-rose-800', 'text-rose-300'],
+        amber: ['bg-amber-950/80', 'border-amber-800', 'text-amber-300'],
+        cyan: ['bg-cyan-950/80', 'border-cyan-800', 'text-cyan-300']
+      };
+      alert.classList.add(...(map[color] || map.cyan));
+      alert.innerText = msg;
+    }
+
+    async function checkEngine() {
+      const pill = document.getElementById('engine-pill');
+      try {
+        const d = await (await fetch('/api/diagnostics')).json();
+        if (d.gemini_key_loaded) {
+          pill.className = 'inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950 border border-emerald-800 text-emerald-400';
+          pill.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 mr-2 animate-pulse"></span> Engine Active (Gemini OCR on)';
+        } else {
+          pill.className = 'inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-950 border border-amber-800 text-amber-400';
+          pill.innerHTML = '<span class="w-2 h-2 rounded-full bg-amber-400 mr-2"></span> No GEMINI_API_KEY: image OCR disabled';
+        }
+      } catch (e) {
+        pill.className = 'inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-rose-950 border border-rose-800 text-rose-400';
+        pill.innerHTML = '<span class="w-2 h-2 rounded-full bg-rose-400 mr-2"></span> Backend unreachable';
+      }
+    }
+
+    // ---------- SUBMIT ----------
+    async function submitPipeline(event) {
+      if (event) event.preventDefault();
+      const btn = document.getElementById('btn-submit');
+      const textInput = document.getElementById('complaint_text').value.trim();
+      const fileInput = document.getElementById('image_file').files[0];
+
+      if (!textInput && !fileInput) {
+        showStatus('Please upload an image petition or write text narrative.', 'amber');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="animate-spin">⏳</span> Running OCR & Prediction...';
+      showStatus(fileInput ? 'Analyzing petition slip with Gemini Vision...' : 'Analyzing complaint text...', 'cyan');
+
+      const formData = new FormData();
+      if (textInput) formData.append('complaint_text', textInput);
+      if (fileInput) formData.append('image', fileInput);
+
+      try {
+        const response = await fetch('/api/complaints', { method: 'POST', body: formData });
+        if (!response.ok) {
+          const errData = await response.json().catch(() => ({}));
+          throw new Error(errData.detail || `Server error ${response.status}`);
+        }
+        const resJson = await response.json();
+        const v = toView(resJson.data || resJson);
+
+        if (!v.assetId) {
+          const ocrFailed = v.text.includes('OCR failed');
+          showStatus(ocrFailed
+            ? 'OCR could not read this slip (check /api/diagnostics and the server log). Logged for manual review.'
+            : `No asset matched (${v.confidence}). Logged for manual review.`, 'amber');
+        } else {
+          showStatus(`Processed and logged to C_report.csv. Matched ${v.assetId} on ${v.location}.`, 'emerald');
+        }
+
+        fillCard(v);
+        selectedId = v.id;
+        await fetchQueue();
+      } catch (err) {
+        showStatus(`Error: ${err.message}`, 'rose');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>🚀</span> Run Pipeline & Process';
+      }
+    }
+
+    function fillCard(v) {
+      document.getElementById('card-asset-id').innerText = v.assetId || 'Unmatched';
+      document.getElementById('card-location').innerText = v.location;
+      document.getElementById('card-defect').innerText = v.defect;
+      document.getElementById('card-rul').innerText = v.rul != null ? `${v.rul} yrs` : '--';
+      document.getElementById('card-crew').innerText = v.crew;
+      document.getElementById('card-action').innerText = v.action || '--';
+      const b = document.getElementById('card-badge');
+      b.innerText = v.assetId ? `${v.score} ${v.level}` : 'Manual review';
+      b.className = badgeClass(v.level);
+    }
+
+    // ---------- QUEUE ----------
+    async function fetchQueue() {
+      const tbody = document.getElementById('workorder-table-body');
+      try {
+        const res = await fetch('/api/reports');
+        if (!res.ok) throw new Error('Could not fetch reports');
+        const views = (await res.json()).map(toView);
+
+        if (!views.length) {
+          tbody.innerHTML = '<tr><td colspan="7" class="py-6 text-center text-xs text-slate-500">No active work orders. Submit a complaint slip above to begin.</td></tr>';
+          return;
+        }
+
+        views.sort((a, b) => b.score - a.score || b.id.localeCompare(a.id));   // highest priority first
+        rowsById = {};
+        tbody.innerHTML = '';
+
+        views.forEach(v => {
+          rowsById[v.id] = v;
+          const tr = document.createElement('tr');
+          tr.dataset.id = v.id;
+          tr.className = 'border-b border-slate-800/60 hover:bg-slate-800/50 cursor-pointer transition';
+          tr.onclick = () => selectRow(v);
+          tr.innerHTML = `
+            <td class="py-3 px-4"><span class="${badgeClass(v.level)}">${v.assetId ? v.score : '--'} ${esc(v.level)}</span></td>
+            <td class="py-3 px-4 font-mono text-cyan-400 font-bold">${esc(v.assetId || '--')}</td>
+            <td class="py-3 px-4 text-slate-300">${esc(v.location)}</td>
+            <td class="py-3 px-4">${esc(v.defect)}</td>
+            <td class="py-3 px-4 font-bold ${v.rul != null && v.rul <= 1.0 ? 'text-rose-400' : 'text-slate-100'}">${v.rul != null ? v.rul + ' yrs' : '--'}</td>
+            <td class="py-3 px-4 text-slate-300">${v.condition != null ? v.condition + '/100' : '--'}</td>
+            <td class="py-3 px-4 text-xs text-slate-400">${esc(v.crew)}</td>`;
+          tbody.appendChild(tr);
+        });
+
+        const pick = rowsById[selectedId] || views.find(v => v.assetId) || views[0];
+        selectRow(pick);
+        if (!selectedId) fillCard(pick);
+      } catch (err) {
+        tbody.innerHTML = '<tr><td colspan="7" class="py-6 text-center text-xs text-rose-400">Failed to load reports from backend.</td></tr>';
+      }
+    }
+
+    // ---------- CHARTS ----------
+    function selectRow(v) {
+      selectedId = v.id;
+      document.querySelectorAll('#workorder-table-body tr').forEach(r => {
+        const on = r.dataset.id === v.id;
+        r.classList.toggle('bg-cyan-950/40', on);
+        r.classList.toggle('border-l-4', on);
+        r.classList.toggle('border-l-cyan-400', on);
+      });
+
+      const pill = document.getElementById('chart-risk-pill');
+      document.getElementById('chart-asset-pill').innerText = v.assetId || 'Unmatched';
+      document.getElementById('chart-main-title').innerText = v.assetId
+        ? `Predictive Maintenance Curve (${v.assetId}) - ${v.defect}` : 'Predictive Maintenance & Degradation Forecast';
+
+      const hasData = v.assetId && v.rul != null && v.condition != null;
+      document.getElementById('chart-empty').classList.toggle('hidden', !!hasData);
+      document.getElementById('chart-grid').classList.toggle('hidden', !hasData);
+
+      if (!hasData) {
+        pill.className = badgeClass('Unassigned');
+        pill.innerText = 'Manual review';
+        if (degradationChart) { degradationChart.destroy(); degradationChart = null; }
+        if (failureRiskChart) { failureRiskChart.destroy(); failureRiskChart = null; }
+        return;
+      }
+
+      const label = { High: 'Critical Risk', Medium: 'Moderate Wear', Low: 'Low Risk' }[v.level] || v.level;
+      pill.className = badgeClass(v.level);
+      pill.innerText = `${label} (RUL: ${v.rul} Yrs)`;
+      renderCharts(v);
+    }
+
+    function renderCharts(v) {
+      const color = { High: '#ef4444', Medium: '#f59e0b', Low: '#38bdf8' }[v.level] || '#38bdf8';
+      const tick = { color: '#94a3b8', font: { size: 10 } };
+      const grid = { color: '#1e293b' };
+      const legend = { labels: { color: '#94a3b8', font: { size: 10 } } };
+
+      // 1) Degradation curve (numeric x axis = asset age in years)
+      const s = buildHealthSeries(v);
+      if (degradationChart) degradationChart.destroy();
+      degradationChart = new Chart(document.getElementById('degradationCurveChart'), {
+        type: 'line',
+        data: {
+          datasets: [
+            { label: 'Estimated history', data: s.past, borderColor: color, backgroundColor: color + '26', fill: true, borderWidth: 2.5, tension: 0.3, pointRadius: 0 },
+            { label: 'Forecast', data: s.future, borderColor: color, borderDash: [6, 4], borderWidth: 2.5, tension: 0, pointRadius: 0 },
+            { label: `Today (${s.age.toFixed(1)} yrs, ${s.cond}%)`, data: [{ x: s.age, y: s.cond }], showLine: false, pointRadius: 7, pointBackgroundColor: '#fff', pointBorderColor: color, pointBorderWidth: 3 },
+            { label: 'Failure threshold (25%)', data: [{ x: 0, y: 25 }, { x: s.xMax, y: 25 }], borderColor: '#f43f5e', borderDash: [3, 3], borderWidth: 1.5, pointRadius: 0 }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false, animation: false,
+          plugins: { legend },
+          scales: {
+            x: { type: 'linear', min: 0, max: s.xMax, title: { display: true, text: 'Asset age (years)', color: '#94a3b8', font: { size: 10 } }, ticks: tick, grid },
+            y: { min: 0, max: 100, ticks: { ...tick, callback: val => val + '%' }, grid }
+          }
+        }
+      });
+
+      // 2) 12-month failure probability
+      const probs = failureProbability(v.rul, 12);
+      const labels = probs.map((_, i) => i === 0 ? 'Now' : `+${i}m`);
+      const maxP = Math.max(...probs);
+      const yMax = maxP >= 50 ? 100 : Math.max(5, Math.ceil(maxP * 1.3 / 5) * 5);
+
+      if (failureRiskChart) failureRiskChart.destroy();
+      failureRiskChart = new Chart(document.getElementById('failureRiskChart'), {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [{
+            label: `${v.assetId} Failure Probability (%)`,
+            data: probs,
+            backgroundColor: probs.map(p => p >= 80 ? '#dc2626' : p >= 50 ? '#ea580c' : p >= 20 ? '#d97706' : '#0284c7'),
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false, animation: false,
+          plugins: { legend },
+          scales: {
+            x: { ticks: tick, grid },
+            y: { min: 0, max: yMax, ticks: { ...tick, callback: val => val + '%' }, grid }
+          }
+        }
+      });
+    }
+
+    // preview chosen image
+    document.getElementById('image_file').addEventListener('change', e => {
+      const f = e.target.files[0], img = document.getElementById('image_preview');
+      if (f) { img.src = URL.createObjectURL(f); img.classList.remove('hidden'); } else { img.classList.add('hidden'); }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => { checkEngine(); fetchQueue(); });
+  </script>
+  <!-- add-on features: remove this line to disable them -->
+  <script src="/features.js" defer></script>
+</body>
+</html>
